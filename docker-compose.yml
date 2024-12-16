@@ -1,0 +1,15 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    environment:
+      MYSQL_DATABASE: mydb
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+    volumes:
+      - "./mariadb/data:/var/lib/mysql"
+      - "./mariadb/logs:/var/log/mysql"
+  backend:
+    image: nestjs-example
+    ports:
+      - "80:3000"
+    environment:
+      - DATABASE_URL=mysql://mariadb:3306/mydb
